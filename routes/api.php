@@ -19,8 +19,8 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 });
 
 Route::get('test', function () {
-    abort(404);
-});
+    return response()->noContent();
+})->middleware('auth:sanctum');
 
 
 //Route::group(['prefix' => 'auth'], function (){
