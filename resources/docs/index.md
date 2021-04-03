@@ -1,5 +1,5 @@
 ---
-title: Laravel Documentation
+title: Reddit Documentation
 
 language_tabs:
 - bash

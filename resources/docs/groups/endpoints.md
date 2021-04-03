@@ -13,7 +13,7 @@ curl -X POST \
     "http://localhost:8000/api/auth/login" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"email":"vero","password":"et"}'
+    -d '{"email":"quis","password":"ipsam"}'
 
 ```
 
@@ -28,8 +28,8 @@ let headers = {
 };
 
 let body = {
-    "email": "vero",
-    "password": "et"
+    "email": "quis",
+    "password": "ipsam"
 }
 
 fetch(url, {
@@ -290,6 +290,132 @@ fetch(url, {
 </form>
 
 
+## Mark the authenticated user&#039;s email address as verified.
+
+
+
+
+> Example request:
+
+```bash
+curl -X GET \
+    -G "http://localhost:8000/api/auth/email/verify/sint/omnis" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/auth/email/verify/sint/omnis"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response => response.json());
+```
+
+
+> Example response (401):
+
+```json
+{
+    "message": "Unauthenticated."
+}
+```
+<div id="execution-results-GETapi-auth-email-verify--id---hash-" hidden>
+    <blockquote>Received response<span id="execution-response-status-GETapi-auth-email-verify--id---hash-"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-auth-email-verify--id---hash-"></code></pre>
+</div>
+<div id="execution-error-GETapi-auth-email-verify--id---hash-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-auth-email-verify--id---hash-"></code></pre>
+</div>
+<form id="form-GETapi-auth-email-verify--id---hash-" data-method="GET" data-path="api/auth/email/verify/{id}/{hash}" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('GETapi-auth-email-verify--id---hash-', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+        <button type="button" style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-tryout-GETapi-auth-email-verify--id---hash-" onclick="tryItOut('GETapi-auth-email-verify--id---hash-');">Try it out ⚡</button>
+    <button type="button" style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-canceltryout-GETapi-auth-email-verify--id---hash-" onclick="cancelTryOut('GETapi-auth-email-verify--id---hash-');" hidden>Cancel</button>&nbsp;&nbsp;
+    <button type="submit" style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-executetryout-GETapi-auth-email-verify--id---hash-" hidden>Send Request 💥</button>
+    </h3>
+<p>
+<small class="badge badge-green">GET</small>
+ <b><code>api/auth/email/verify/{id}/{hash}</code></b>
+</p>
+<h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+<p>
+<b><code>id</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="id" data-endpoint="GETapi-auth-email-verify--id---hash-" data-component="url" required  hidden>
+<br>
+</p>
+<p>
+<b><code>hash</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="hash" data-endpoint="GETapi-auth-email-verify--id---hash-" data-component="url" required  hidden>
+<br>
+</p>
+</form>
+
+
+## Send a new email verification notification.
+
+
+
+
+> Example request:
+
+```bash
+curl -X POST \
+    "http://localhost:8000/api/auth/email/verification-notification" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/auth/email/verification-notification"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response => response.json());
+```
+
+
+<div id="execution-results-POSTapi-auth-email-verification-notification" hidden>
+    <blockquote>Received response<span id="execution-response-status-POSTapi-auth-email-verification-notification"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-email-verification-notification"></code></pre>
+</div>
+<div id="execution-error-POSTapi-auth-email-verification-notification" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-email-verification-notification"></code></pre>
+</div>
+<form id="form-POSTapi-auth-email-verification-notification" data-method="POST" data-path="api/auth/email/verification-notification" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-email-verification-notification', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+        <button type="button" style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-tryout-POSTapi-auth-email-verification-notification" onclick="tryItOut('POSTapi-auth-email-verification-notification');">Try it out ⚡</button>
+    <button type="button" style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-canceltryout-POSTapi-auth-email-verification-notification" onclick="cancelTryOut('POSTapi-auth-email-verification-notification');" hidden>Cancel</button>&nbsp;&nbsp;
+    <button type="submit" style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-executetryout-POSTapi-auth-email-verification-notification" hidden>Send Request 💥</button>
+    </h3>
+<p>
+<small class="badge badge-black">POST</small>
+ <b><code>api/auth/email/verification-notification</code></b>
+</p>
+</form>
+
+
 ## Update the user&#039;s profile information.
 
 
@@ -525,7 +651,7 @@ curl -X POST \
     "http://localhost:8000/api/auth/two-factor-challenge" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"code":"enim","recovery_code":"neque"}'
+    -d '{"code":"beatae","recovery_code":"omnis"}'
 
 ```
 
@@ -540,8 +666,8 @@ let headers = {
 };
 
 let body = {
-    "code": "enim",
-    "recovery_code": "neque"
+    "code": "beatae",
+    "recovery_code": "omnis"
 }
 
 fetch(url, {
@@ -866,6 +992,60 @@ fetch(url, {
 <p>
 <small class="badge badge-black">POST</small>
  <b><code>api/auth/user/two-factor-recovery-codes</code></b>
+</p>
+</form>
+
+
+## Return an empty response simply to trigger the storage of the CSRF cookie in the browser.
+
+
+
+
+> Example request:
+
+```bash
+curl -X GET \
+    -G "http://localhost:8000/sanctum/csrf-cookie" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/sanctum/csrf-cookie"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response => response.json());
+```
+
+
+<div id="execution-results-GETsanctum-csrf-cookie" hidden>
+    <blockquote>Received response<span id="execution-response-status-GETsanctum-csrf-cookie"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-GETsanctum-csrf-cookie"></code></pre>
+</div>
+<div id="execution-error-GETsanctum-csrf-cookie" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETsanctum-csrf-cookie"></code></pre>
+</div>
+<form id="form-GETsanctum-csrf-cookie" data-method="GET" data-path="sanctum/csrf-cookie" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('GETsanctum-csrf-cookie', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+        <button type="button" style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-tryout-GETsanctum-csrf-cookie" onclick="tryItOut('GETsanctum-csrf-cookie');">Try it out ⚡</button>
+    <button type="button" style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-canceltryout-GETsanctum-csrf-cookie" onclick="cancelTryOut('GETsanctum-csrf-cookie');" hidden>Cancel</button>&nbsp;&nbsp;
+    <button type="submit" style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;" id="btn-executetryout-GETsanctum-csrf-cookie" hidden>Send Request 💥</button>
+    </h3>
+<p>
+<small class="badge badge-green">GET</small>
+ <b><code>sanctum/csrf-cookie</code></b>
 </p>
 </form>
 

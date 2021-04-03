@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +11,9 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  ...$guards
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @param string|null ...$guards
      * @return mixed
      */
     public function handle(Request $request, Closure $next, ...$guards)
@@ -23,10 +22,13 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-//                return response()->json([
-//                    ['message' => 'Successfully registered']
-//                ]);
-//                return redirect(RouteServiceProvider::HOME);
+                if ($request->ajax()) {
+                    return response()->json([
+                        ['message' => 'Successfully registered']
+                    ]);
+                }
+
+                return redirect(env('CLIENT_URL'));
             }
         }
 

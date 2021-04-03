@@ -61,7 +61,7 @@ return [
     |
     */
 
-    'home' => RouteServiceProvider::HOME,
+    'home' => env('CLIENT_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,14 +132,14 @@ return [
     */
 
     'features' => [
-        Features::registration(),
-        Features::resetPasswords(),
-        // Features::emailVerification(),
-        Features::updateProfileInformation(),
-        Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirmPassword' => true,
-        ]),
+         Features::registration(),
+         Features::resetPasswords(),
+         Features::emailVerification(),
+         Features::updateProfileInformation(),
+         Features::updatePasswords(),
+         Features::twoFactorAuthentication([
+             'confirmPassword' => true,
+         ]),
     ],
 
 ];
