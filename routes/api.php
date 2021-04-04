@@ -18,11 +18,7 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('test', function () {
-    return response()->noContent();
-})->middleware('auth:sanctum');
 
-
-//Route::group(['prefix' => 'auth'], function (){
-//   Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
-//});
+Route::group(['prefix' => 'auth'], function () {
+    Route::delete('/destroy', [\App\Http\Controllers\AuthController::class, 'destroyAccount'])->middleware(['auth:sanctum', 'password.confirm']);
+});

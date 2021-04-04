@@ -9,12 +9,8 @@ namespace App\Http\Controllers;
  */
 class AuthController extends Controller
 {
-
-
-    public function deactivateProfile()
+    public function destroyAccount()
     {
-
+        return auth()->user();
     }
-
-
 }
