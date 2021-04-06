@@ -86,6 +86,7 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        //
+        $this->authorize('delete', $thread);
+        $thread->delete();
     }
 }
