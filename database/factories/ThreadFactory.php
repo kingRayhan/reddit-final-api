@@ -28,8 +28,7 @@ class ThreadFactory extends Factory
             return [
                 'title' => $this->faker->sentence,
                 'text' => $this->faker->paragraph,
-//                'user_id' => User::factory(),
-                'user_id' => 19,
+                'user_id' => User::factory(),
                 'type' => 'TEXT'
             ];
         } else {
@@ -37,7 +36,6 @@ class ThreadFactory extends Factory
                 'title' => $this->faker->sentence,
                 'link' => $this->faker->url,
                 'image' => $this->faker->imageUrl(),
-//                'user_id' => 19,
                 'user_id' => User::factory(),
                 'type' => 'LINK'
             ];
