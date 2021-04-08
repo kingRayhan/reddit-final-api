@@ -29,7 +29,7 @@ class ThreadController extends Controller
                 $query->where('username', $username);
             return $query;
         })
-            ->with(['user'])
+            ->with(['user', 'votes'])
             ->latest()
             ->paginate(request()->query('limit', 10));
 

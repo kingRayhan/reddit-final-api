@@ -16,7 +16,10 @@ class ThreadList extends JsonResource
     {
         return array_merge(parent::toArray($request), [
             'user' => $this->user,
-            'time' => $this->created_at->diffForHumans()
+            'time' => $this->created_at->diffForHumans(),
+            'upvotedBy' => $this->upVotedBy(),
+//            'downVotedBy' => $this->downVotedBy(),
+            'votes' => $this->votes
         ]);
     }
 }
