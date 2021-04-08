@@ -13,7 +13,7 @@ class ThreadController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:sanctum'])->except(['show', 'index']);
+        $this->middleware(['auth:sanctum', 'verified'])->except(['show', 'index']);
     }
 
     /**

@@ -12,9 +12,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register(UrlGenerator $url)
+    public function register()
     {
-
         /**
          * Enable telescope only for dev env
          */
@@ -22,22 +21,21 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+    }
 
+    /**
+     * Bootstrap any application services.
+     *
+     * @param UrlGenerator $url
+     * @return void
+     */
+    public function boot(UrlGenerator $url)
+    {
         /**
          * Enable https
          */
         if (env('ENABLE_HTTPS', false) || $this->app->environment('production')) {
             $url->forceScheme('https');
         }
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
     }
 }

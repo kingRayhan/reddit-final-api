@@ -17,7 +17,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('url')->nullable();
+            $table->string('link')->nullable();
             $table->string('image')->nullable();
             $table->text('text')->nullable();
             $table->enum('type', ['LINK', 'TEXT'])->nullable();

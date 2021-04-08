@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ThreadFactory extends Factory
@@ -34,10 +35,10 @@ class ThreadFactory extends Factory
         } else {
             return [
                 'title' => $this->faker->sentence,
-                'url' => $this->faker->url,
+                'link' => $this->faker->url,
                 'image' => $this->faker->imageUrl(),
-                'user_id' => 19,
-//                'user_id' => User::factory(),
+//                'user_id' => 19,
+                'user_id' => User::factory(),
                 'type' => 'LINK'
             ];
         }
