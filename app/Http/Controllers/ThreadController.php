@@ -72,9 +72,27 @@ class ThreadController extends Controller
      */
     public function update(UpdateThreadRequest $request, Thread $thread)
     {
-        $thread->update($request->all());
+        if ($request->type == 'LINK') {
+            $thread->update([
+                'title' => $request->title,
+                'link' => $request->link,
+                'image' => $request->image,
+                'type' => 'LINK',
+                'text' => null
+            ]);
+        } else {
+            $thread->update([
+                'title' => $request->title,
+                'text' => $request->text,
+                'type' => 'TEXT',
+                'link' => null,
+                'image' => null,
+            ]);
+        }
+
         return response()->json([
-            'message' => 'Thread updated'
+            'message' => 'Thread updated',
+            'data' => $thread
         ]);
     }
 

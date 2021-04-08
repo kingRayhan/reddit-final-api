@@ -26,7 +26,7 @@ class StoreThreadRequest extends FormRequest
     {
         return [
             'title' => ['required', 'max:255'],
-            'url' => ['nullable', 'url', 'max:255'],
+            'link' => ['nullable', 'url', 'max:255'],
             'image' => ['nullable', 'url', 'max:255'],
             'text' => ['nullable', 'min:10'],
             'type' => ['required', Rule::in(['LINK', 'TEXT'])]
