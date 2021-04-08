@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 
 
 Route::apiResource('threads', \App\Http\Controllers\ThreadController::class);
-
-Route::get('/user-threads', [\App\Http\Controllers\ThreadController::class, 'userThreads']);
+Route::post('votes/up', [\App\Http\Controllers\VoteController::class, 'upVote']);
+Route::post('votes/down', [\App\Http\Controllers\VoteController::class, 'downVote']);
 
 Route::group(['prefix' => 'auth'], function () {
     Route::delete('/destroy', [\App\Http\Controllers\AuthController::class, 'destroyAccount'])->middleware(['auth:sanctum', 'password.confirm']);

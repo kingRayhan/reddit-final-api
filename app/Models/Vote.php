@@ -13,4 +13,6 @@ class Vote extends Model
     {
         return $this->morphTo();
     }
+
+    protected $guarded = ['id'];
 }

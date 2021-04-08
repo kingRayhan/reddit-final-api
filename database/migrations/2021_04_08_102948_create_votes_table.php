@@ -22,6 +22,7 @@ class CreateVotesTable extends Migration
             $table->foreignIdFor(\App\Models\User::class)
                 ->constrained()
                 ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

@@ -22,27 +22,32 @@ class Thread extends Model
         return $this->morphMany(Vote::class, 'voteable');
     }
 
-    public function upVotedBy()
+    public static function createUpVote($thread_id)
     {
-        $votes = $this->votes()->where('type', 'UP')->get();
-        return $votes->map(function ($vote) {
-            return $vote->user_id;
-        });
+        return Vote::create([
+            'user_id' => auth()->id(),
+            'voteable_type' => 'App/Models/Thread',
+            'voteable_id' => $thread_id,
+            'type' => 'UP'
+        ]);
     }
 
-    public function downVotedBy()
+    public static function createDownVote($thread_id)
     {
-        $votes = $this->votes()->where('type', 'DOWN')->get();
-        return $votes->map(function ($vote) {
-            return $vote->user_id;
-        });
+        return Vote::create([
+            'user_id' => auth()->id(),
+            'voteable_type' => 'App/Models/Thread',
+            'voteable_id' => $thread_id,
+            'type' => 'DOWN'
+        ]);
     }
 
-    public function getVoteCountAttribute()
+    public static function firstVoteByCurrentUser($thread_id)
     {
-        $upVoteCount = $this->votes->where('type', 'UP')->count();
-        $downVoteCount = $this->votes->where('type', 'DOWN')->count();
-        return $upVoteCount - $downVoteCount;
+        return auth()->user()
+            ->votes()
+            ->where('voteable_type', 'App/Models/Thread')
+            ->where('voteable_id', $thread_id)->first();
     }
 
     public function user()
