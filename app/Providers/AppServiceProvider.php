@@ -34,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
         /**
          * Enable https
          */
-        if (env('ENABLE_HTTPS', false) || $this->app->environment('production')) {
-            $url->forceScheme('https');
-        }
+//        if (env('ENABLE_HTTPS', false) || $this->app->environment('production')) {
+//            $url->forceScheme('https');
+//        }
     }
 }
