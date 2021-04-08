@@ -14,7 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Thread::factory(50)->create();
+        /**
+         * Create 100 users and simultaneously create 50 threads for each user
+         */
+        \App\Models\User::factory(100)->create()->each(function ($user) {
+            Thread::factory(50)->create(['user_id' => $user->id]);
+        });
+
+
     }
 }
