@@ -26,7 +26,7 @@ class Thread extends Model
     {
         return Vote::create([
             'user_id' => auth()->id(),
-            'voteable_type' => 'App/Models/Thread',
+            'voteable_type' => 'App\\Models\\Thread',
             'voteable_id' => $thread_id,
             'type' => 'UP'
         ]);
@@ -36,7 +36,7 @@ class Thread extends Model
     {
         return Vote::create([
             'user_id' => auth()->id(),
-            'voteable_type' => 'App/Models/Thread',
+            'voteable_type' => 'App\\Models\\Thread',
             'voteable_id' => $thread_id,
             'type' => 'DOWN'
         ]);
@@ -46,7 +46,7 @@ class Thread extends Model
     {
         return auth()->user()
             ->votes()
-            ->where('voteable_type', 'App/Models/Thread')
+            ->where('voteable_type', 'App\\Models\\Thread')
             ->where('voteable_id', $thread_id)->first();
     }
 

@@ -28,7 +28,6 @@ class ThreadList extends JsonResource
         return array_merge(parent::toArray($request), [
             'user' => $this->user,
             'time' => $this->created_at->diffForHumans(),
-            'votes' => null,
             'upVotedBy' => $this->upVotedBy(),
             'downVotedBy' => $this->downVotedBy(),
             'voteScores' => $this->upVotedBy()->count() - $this->downVotedBy()->count()

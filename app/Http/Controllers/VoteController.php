@@ -47,7 +47,7 @@ class VoteController extends Controller
             if ($previousVote) {
                 if ($previousVote->type == 'DOWN') $previousVote->delete();
                 if ($previousVote->type == 'UP') {
-                    $previousVote->update(['type' => 'UP']);
+                    $previousVote->update(['type' => 'DOWN']);
                 }
             } else {
                 Thread::createDownVote($request->resource_id);
