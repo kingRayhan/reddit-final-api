@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
-
-
-Route::apiResource('threads', \App\Http\Controllers\ThreadController::class);
-Route::post('votes/up', [\App\Http\Controllers\VoteController::class, 'upVote']);
-Route::post('votes/down', [\App\Http\Controllers\VoteController::class, 'downVote']);
+Route::apiResource('threads', ThreadController::class);
+Route::post('votes/up', [VoteController::class, 'upVote']);
+Route::post('votes/down', [VoteController::class, 'downVote']);
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::delete('/destroy', [\App\Http\Controllers\AuthController::class, 'destroyAccount'])->middleware(['auth:sanctum', 'password.confirm']);
+    Route::delete('/destroy', [AuthController::class, 'destroyAccount'])
+        ->middleware(['auth:sanctum', 'password.confirm']);
 });

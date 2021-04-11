@@ -60,7 +60,7 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        return new ThreadDetails($thread);
+        return new ThreadList($thread);
     }
 
     /**
