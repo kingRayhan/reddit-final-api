@@ -10,12 +10,12 @@ trait NestableComment
     public static function nestedComments($thread_id, $page = 1, $limit = 10)
     {
         $comments = Comment::where('thread_id', $thread_id);
+
         $groupedWithOutEagerLoadedUser = $comments->get()->groupBy('parent_id');
         $ids = self::getRootIds($groupedWithOutEagerLoadedUser, $page, $limit);
-
         $grouped = $comments->whereIn('id', $ids)->with('user')->get()->groupBy('parent_id');
 
-        return self::buildNest($grouped->get(null), $grouped)->forPage($page, $limit);
+        return self::buildNest($grouped->get(null), $grouped);
     }
 
     /**
