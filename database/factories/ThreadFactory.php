@@ -40,6 +40,5 @@ class ThreadFactory extends Factory
                 'type' => 'LINK'
             ];
         }
-
     }
 }

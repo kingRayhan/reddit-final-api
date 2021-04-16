@@ -11,7 +11,7 @@ class VoteController extends Controller
     {
         $this->middleware('auth:sanctum');
     }
-    
+
     /**
      * Create up vote
      * @param VoteRequest $request
@@ -38,6 +38,7 @@ class VoteController extends Controller
     /**
      * Create down vote
      * @param VoteRequest $request
+     * @return \Illuminate\Http\Response
      */
     public function downVote(VoteRequest $request)
     {

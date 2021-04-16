@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\NestableComment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Thread extends Model
 {
-    use HasFactory;
+    use HasFactory, NestableComment;
 
     protected $guarded = ['id'];
 
@@ -53,6 +54,11 @@ class Thread extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public static function boot()

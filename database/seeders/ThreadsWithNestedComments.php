@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Thread;
 use Illuminate\Database\Seeder;
 
-class ThreadSeeder extends Seeder
+class ThreadsWithNestedComments extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +13,6 @@ class ThreadSeeder extends Seeder
      */
     public function run()
     {
-        Thread::factory(10)->create();
+//        Thread::factory()->
     }
 }

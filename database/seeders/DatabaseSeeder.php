@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Database\Seeder;
 
@@ -14,13 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /**
-         * Create 100 users and simultaneously create 50 threads for each user
-         */
-        \App\Models\User::factory(100)->create()->each(function ($user) {
-            Thread::factory(50)->create(['user_id' => $user->id]);
-        });
 
+        $thread = Thread::factory()->create();
 
+        Comment::factory()->count(2)->create(['thread_id' => $thread->id])
+            ->each(function ($comment) use ($thread) {
+                $this->createdNestedComments($comment, $thread);
+            });
+
+    }
+
+    public function createdNestedComments($comment, $thread, $currentLevel = 0, $maxLevel = 2)
+    {
+        if ($maxLevel == $currentLevel) return;
+        
+        Comment::factory()->count(3)
+            ->create(['thread_id' => $thread->id, 'parent_id' => $comment->id])
+            ->each(function ($reply) use ($thread, $currentLevel) {
+                $this->createdNestedComments($reply, $thread, ++$currentLevel);
+            });
     }
 }
