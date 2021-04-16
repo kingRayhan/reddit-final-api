@@ -4,24 +4,26 @@ namespace App;
 
 trait NestableComment
 {
-    public function nestedComments($page = 1, $perpage = 10)
+    public function nestedComments($page = 1, $limit = 10)
     {
         $comments = $this->comments();
-        $grouped = $comments->get()->groupBy('parent_id');
-        $roots = $grouped->get(null);
-
+        $grouped = $comments->with('user')->get()->groupBy('parent_id');
+        $roots = $grouped->get(null)->forPage($page, $limit);
         return $this->buildNest($roots, $grouped);
     }
 
-    public function getIds($comments)
-    {
-
-    }
-
+    /**
+     * Build nested comment
+     * @param $comments
+     * @param $groupComments
+     * @param int $currentDepthLevel
+     * @param int $maxDepthLevel
+     * @return mixed|void
+     */
     public function buildNest($comments, $groupComments, $currentDepthLevel = 0, $maxDepthLevel = 4)
     {
         if ($currentDepthLevel == $maxDepthLevel) return;
-        
+
         return $comments->each(function ($comment) use ($groupComments, $currentDepthLevel) {
             $replies = $groupComments->get($comment->id);
             if ($replies) {

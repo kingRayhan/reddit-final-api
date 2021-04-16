@@ -10,10 +10,11 @@ class CommentController extends Controller
     {
         if (!request()->query('thread_id'))
             abort('403', 'Thread id is not provided');
-
         $thread = Thread::findOrFail(request()->query('thread_id'));
 
-        return $thread->nestedComments();
-//        return CommentList::collection($thread->nestedComments());
+        $page = request()->query('page', 1);
+        $limit = request()->query('limit', 10);
+        
+        return $thread->nestedComments($page, $limit);
     }
 }
