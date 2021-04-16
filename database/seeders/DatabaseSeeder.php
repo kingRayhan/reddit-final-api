@@ -18,17 +18,17 @@ class DatabaseSeeder extends Seeder
 
         $thread = Thread::factory()->create();
 
-        Comment::factory()->count(2)->create(['thread_id' => $thread->id])
+        Comment::factory()->count(100)->create(['thread_id' => $thread->id])
             ->each(function ($comment) use ($thread) {
                 $this->createdNestedComments($comment, $thread);
             });
 
     }
 
-    public function createdNestedComments($comment, $thread, $currentLevel = 0, $maxLevel = 2)
+    public function createdNestedComments($comment, $thread, $currentLevel = 0, $maxLevel = 3)
     {
         if ($maxLevel == $currentLevel) return;
-        
+
         Comment::factory()->count(3)
             ->create(['thread_id' => $thread->id, 'parent_id' => $comment->id])
             ->each(function ($reply) use ($thread, $currentLevel) {

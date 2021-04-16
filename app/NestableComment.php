@@ -7,13 +7,10 @@ trait NestableComment
     public function nestedComments($page = 1, $perpage = 10)
     {
         $comments = $this->comments();
-        $grouped = $comments->with('user')->get()->groupBy('parent_id');
+        $grouped = $comments->get()->groupBy('parent_id');
         $roots = $grouped->get(null);
-        
 
-        return $roots;
-
-
+        return $this->buildNest($roots, $grouped);
     }
 
     public function getIds($comments)
@@ -21,18 +18,17 @@ trait NestableComment
 
     }
 
-    public function buildNest($comments, $groupComments)
+    public function buildNest($comments, $groupComments, $currentDepthLevel = 0, $maxDepthLevel = 4)
     {
-        return $comments->each(function ($comment) use ($groupComments) {
-            // Find replies by root level comment id
+        if ($currentDepthLevel == $maxDepthLevel) return;
+        
+        return $comments->each(function ($comment) use ($groupComments, $currentDepthLevel) {
             $replies = $groupComments->get($comment->id);
-
             if ($replies) {
-                // assign replies to children property
-                $comment->children = $replies;
-                $this->buildNest($replies, $groupComments);
+                $comment->replies = $replies;
+                $this->buildNest($replies, $groupComments, ++$currentDepthLevel);
             } else {
-                $comment->children = [];
+                $comment->replies = [];
             }
         });
     }
