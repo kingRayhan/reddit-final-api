@@ -12,6 +12,10 @@ trait NestableComment
         $comments = Comment::where('thread_id', $thread_id);
 
         $groupedWithOutEagerLoadedUser = $comments->get()->groupBy('parent_id');
+        if ($groupedWithOutEagerLoadedUser->isEmpty()) {
+            return null;
+        }
+
         $ids = self::getRootIds($groupedWithOutEagerLoadedUser, $page, $limit);
         $grouped = $comments->whereIn('id', $ids)->with('user')->get()->groupBy('parent_id');
 
