@@ -15,14 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         $thread = Thread::factory()->create();
-
         Comment::factory()->count(100)->create(['thread_id' => $thread->id])
             ->each(function ($comment) use ($thread) {
                 $this->createdNestedComments($comment, $thread);
             });
-
     }
 
     public function createdNestedComments($comment, $thread, $currentLevel = 0, $maxLevel = 3)

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\NestableComment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory, NestableComment;
 
     public function thread()
     {
@@ -23,4 +24,5 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }
+
 }
