@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CommentController extends Controller
 {
@@ -15,6 +16,9 @@ class CommentController extends Controller
         if (!$thread_id)
             abort('403', 'Thread id is not provided');
 
-        return Comment::nestedComments($thread_id, $page, $limit);
+        $comments = Comment::nestedComments($thread_id, $page, $limit);
+        $count = Comment::where('thread_id', $thread_id)->whereNull('parent_id')->count();
+        
+        return new LengthAwarePaginator($comments, $count, $limit, $page);
     }
 }
