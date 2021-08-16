@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Comment;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +15,12 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
+    {
+        User::factory()->count(15)->create();
+        Thread::factory()->count(500)->create();
+    }
+
+    public function nestedCommentGeneration()
     {
         $thread = Thread::factory()->create();
         Comment::factory()->count(100)->create(['thread_id' => $thread->id])

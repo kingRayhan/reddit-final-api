@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Http;
 
 class ThreadFactory extends Factory
 {
@@ -24,19 +25,26 @@ class ThreadFactory extends Factory
     {
         $isTextThread = $this->faker->boolean;
 
+
+        $memeAPI = Http::get('https://meme-api.herokuapp.com/gimme');
+
+
+
         if ($isTextThread) {
             return [
-                'title' => $this->faker->sentence,
+                // 'title' => $this->faker->sentence,
+                'title' => $memeAPI->json('title'),
                 'text' => $this->faker->paragraph,
-                'user_id' => User::factory(),
+                'user_id' => User::all()->random()->id,
                 'type' => 'TEXT'
             ];
         } else {
             return [
-                'title' => $this->faker->sentence,
-                'link' => $this->faker->url,
-                'image' => $this->faker->imageUrl(),
-                'user_id' => User::factory(),
+                // 'title' => $this->faker->sentence,
+                'title' => $memeAPI->json('title'),
+                'link' => $memeAPI->json('url'),
+                'image' => $memeAPI->json('url'),
+                'user_id' => User::all()->random()->id,
                 'type' => 'LINK'
             ];
         }
