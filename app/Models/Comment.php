@@ -10,6 +10,8 @@ class Comment extends Model
 {
     use HasFactory, NestableComment;
 
+    protected $fillable = ['text', 'user_id', 'parent_id'];
+
     public function thread()
     {
         return $this->belongsTo(Thread::class);

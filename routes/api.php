@@ -35,7 +35,11 @@ Route::post('votes/down', [VoteController::class, 'downVote']);
 /**
  * Comment
  */
-Route::get('comments', [\App\Http\Controllers\CommentController::class, 'allComments']);
+Route::get('comments/{thread:id}', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::post('comments/{thread:id}', [\App\Http\Controllers\CommentController::class, 'store']);
+Route::post('reply/{comment:id}', [\App\Http\Controllers\CommentController::class, 'store']);
+Route::put('comments/{comment:id}', [\App\Http\Controllers\CommentController::class, 'update']);
+Route::delete('comments/{comment:id}', [\App\Http\Controllers\CommentController::class, 'destroy']);
 
 
 /**

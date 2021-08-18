@@ -23,7 +23,8 @@ class ThreadFactory extends Factory
      */
     public function definition()
     {
-        $isTextThread = $this->faker->boolean;
+        // $isTextThread = $this->faker->boolean;
+        $isTextThread = false;
 
 
         $memeAPI = Http::get('https://meme-api.herokuapp.com/gimme');

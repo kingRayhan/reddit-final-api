@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(15)->create();
-        Thread::factory()->count(500)->create();
+        // User::factory()->count(15)->create();
+        Thread::factory()->count(200)->create();
     }
 
     public function nestedCommentGeneration()
