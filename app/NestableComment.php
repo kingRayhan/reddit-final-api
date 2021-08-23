@@ -9,7 +9,7 @@ trait NestableComment
 {
     public static function nestedComments($thread_id, $page = 1, $limit = 10)
     {
-        $comments = Comment::where('thread_id', $thread_id);
+        $comments = Comment::where('thread_id', $thread_id)->orderBy('created_at', 'desc');
 
         $groupedWithOutEagerLoadedUser = $comments->get()->groupBy('parent_id');
         if ($groupedWithOutEagerLoadedUser->isEmpty()) {

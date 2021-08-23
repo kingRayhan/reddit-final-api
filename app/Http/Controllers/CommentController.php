@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Comment\StoreCommentRequest;
 use App\Http\Requests\Comment\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Thread;
+use Database\Factories\CommentFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class CommentController extends Controller
@@ -14,6 +16,7 @@ class CommentController extends Controller
     {
         $this->middleware('auth:sanctum')->except('index');
     }
+
     public function index(Thread $thread)
     {
         $page = request()->query('page', 1);
@@ -22,12 +25,14 @@ class CommentController extends Controller
         $comments = Comment::nestedComments($thread->id, $page, $limit);
         $count = Comment::where('thread_id', $thread->id)->whereNull('parent_id')->count();
 
-        return new LengthAwarePaginator($comments, $count, $limit, $page);
+        $comments = new LengthAwarePaginator($comments, $count, $limit, $page);
+
+        return CommentResource::collection($comments);
     }
 
     public function store(StoreCommentRequest $request, Thread $thread)
     {
-        return $thread->comments()->create(
+        $data = $thread->comments()->create(
             array_merge(
                 $request->all(),
                 [
@@ -36,6 +41,11 @@ class CommentController extends Controller
                 ]
             )
         );
+
+        return response()->json([
+            'message' => 'Created successfully',
+            'data' => new CommentResource($data)
+        ]);
     }
 
     public function update(UpdateCommentRequest $request, Comment $comment)
@@ -45,7 +55,7 @@ class CommentController extends Controller
         $comment->update($request->all());
         return response()->json([
             'message' => 'Updated successfully',
-            'data' => $comment
+            'data' => new CommentResource($comment)
         ]);
     }
 
@@ -54,7 +64,8 @@ class CommentController extends Controller
         $this->authorize('delete', $comment);
         $comment->delete();
         return response()->json([
-            'message' => 'Deleted successfully'
+            'message' => 'Deleted successfully',
+            'data' => new CommentResource($comment)
         ]);
     }
 }
