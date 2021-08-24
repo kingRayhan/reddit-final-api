@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\NewCommentCreated;
+use App\Events\NewThreadCreated;
+use App\Listeners\UpVoteMyOwnComment;
+use App\Listeners\UpVoteMyOwnThread;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        NewThreadCreated::class => [
+            UpVoteMyOwnThread::class
+        ],
+        NewCommentCreated::class => [
+            UpVoteMyOwnComment::class
+        ]
     ];
 
     /**

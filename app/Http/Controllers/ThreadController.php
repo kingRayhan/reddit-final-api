@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewThreadCreated;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
 use App\Http\Resources\Thread\ThreadDetails;
@@ -45,6 +46,8 @@ class ThreadController extends Controller
     public function store(StoreThreadRequest $request)
     {
         $thread = auth()->user()->threads()->create($request->all());
+
+        event(new NewThreadCreated($thread));
 
         return response()->json([
             'message' => 'Thread created',

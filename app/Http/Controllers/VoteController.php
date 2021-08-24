@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Vote\VoteRequest;
+use App\Models\Comment;
 use App\Models\Thread;
 
 class VoteController extends Controller
@@ -32,6 +33,19 @@ class VoteController extends Controller
             }
         }
 
+        if ($request->resource_type == 'comment') {
+            $previousVote = Comment::firstVoteByCurrentUser($request->resource_id);
+
+            if ($previousVote) {
+                if ($previousVote->type == 'UP') $previousVote->delete();
+                if ($previousVote->type == 'DOWN') {
+                    $previousVote->update(['type' => 'UP']);
+                }
+            } else {
+                Comment::createUpVote($request->resource_id);
+            }
+        }
+
         return response()->noContent();
     }
 
@@ -52,6 +66,19 @@ class VoteController extends Controller
                 }
             } else {
                 Thread::createDownVote($request->resource_id);
+            }
+        }
+
+        if ($request->resource_type == 'comment') {
+            $previousVote = Comment::firstVoteByCurrentUser($request->resource_id);
+
+            if ($previousVote) {
+                if ($previousVote->type == 'DOWN') $previousVote->delete();
+                if ($previousVote->type == 'UP') {
+                    $previousVote->update(['type' => 'DOWN']);
+                }
+            } else {
+                Comment::createDownVote($request->resource_id);
             }
         }
         return response()->noContent();

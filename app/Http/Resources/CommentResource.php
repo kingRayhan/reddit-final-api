@@ -20,6 +20,9 @@ class CommentResource extends JsonResource
             'text' => $this->text,
             'user' => new UserResource($this->user),
             'replies' => CommentResource::collection($this->replies),
+            'upVotedBy' => $this->upVotedBy(),
+            'downVotedBy' => $this->downVotedBy(),
+            'voteScores' => $this->upVotedBy()->count() - $this->downVotedBy()->count(),
             'created_at' => $this->created_at
         ];
     }

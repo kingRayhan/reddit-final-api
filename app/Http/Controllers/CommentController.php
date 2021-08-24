@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewCommentCreated;
 use App\Http\Requests\Comment\StoreCommentRequest;
 use App\Http\Requests\Comment\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
@@ -41,6 +42,8 @@ class CommentController extends Controller
                 ]
             )
         );
+
+        NewCommentCreated::dispatch($data);
 
         return response()->json([
             'message' => 'Created successfully',
