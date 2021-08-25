@@ -8,6 +8,8 @@ use App\Http\Requests\Comment\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Thread;
+use App\Notifications\NewCommentNotification;
+use App\Notifications\ReplyNotification;
 use Database\Factories\CommentFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -44,6 +46,15 @@ class CommentController extends Controller
         );
 
         NewCommentCreated::dispatch($data);
+
+        if ($request->query('reply_to')) {
+            $replyingComment = Comment::find($request->query('reply_to'));
+            $replyingComment->user->notify(new ReplyNotification($data));
+
+        } else {
+            $thread->user->notify(new NewCommentNotification($data));
+        }
+
 
         return response()->json([
             'message' => 'Created successfully',

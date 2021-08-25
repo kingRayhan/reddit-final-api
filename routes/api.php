@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
@@ -49,3 +50,17 @@ Route::group(['prefix' => 'auth'], function () {
     Route::delete('/destroy', [AuthController::class, 'destroyAccount'])
         ->middleware(['auth:sanctum', 'password.confirm']);
 });
+
+
+/**
+ * Notifications
+ */
+Route::get('notifications', [NotificationController::class, 'notifications']);
+Route::get('notifications/reads', [NotificationController::class, 'readNotifications']);
+Route::get('notifications/unreads', [NotificationController::class, 'unreadNotifications']);
+Route::delete('notifications/destroy-all', [NotificationController::class, 'destroyAll']);
+Route::delete('notifications/destroy-unreads', [NotificationController::class, 'destroyAllUnreads']);
+Route::delete('notifications/destroy-reads', [NotificationController::class, 'destroyAllReads']);
+Route::post('notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead']);
+Route::post('notifications/mark-as-unread/{id}', [NotificationController::class, 'markAsUnread']);
+Route::delete('notifications/delete/{id}', [NotificationController::class, 'destroy']);
