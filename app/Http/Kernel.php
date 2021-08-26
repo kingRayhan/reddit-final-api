@@ -45,7 +45,7 @@ class Kernel extends HttpKernel
         'api' => [
             ApiAcceptJson::class,
             EnsureFrontendRequestsAreStateful::class,
-            'throttle:api',
+//            'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class
         ],
     ];

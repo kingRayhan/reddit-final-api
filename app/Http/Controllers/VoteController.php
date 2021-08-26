@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Vote\VoteRequest;
 use App\Models\Comment;
 use App\Models\Thread;
+use App\Notifications\VoteNotification;
 
 class VoteController extends Controller
 {
@@ -21,6 +22,8 @@ class VoteController extends Controller
     {
 
         if ($request->resource_type == 'thread') {
+            $thread = Thread::find($request->resource_id);
+
             $previousVote = Thread::firstVoteByCurrentUser($request->resource_id);
 
             if ($previousVote) {
@@ -30,10 +33,13 @@ class VoteController extends Controller
                 }
             } else {
                 Thread::createUpVote($request->resource_id);
+                $thread->user->notify(new VoteNotification('up', 'thread', auth()->user(), $thread->title, $request->resource_id));
             }
+
         }
 
         if ($request->resource_type == 'comment') {
+            $comment = Comment::find($request->resource_id);
             $previousVote = Comment::firstVoteByCurrentUser($request->resource_id);
 
             if ($previousVote) {
@@ -43,7 +49,9 @@ class VoteController extends Controller
                 }
             } else {
                 Comment::createUpVote($request->resource_id);
+                $comment->user->notify(new VoteNotification('up', 'comment', auth()->user(), $comment->text, $request->resource_id));
             }
+
         }
 
         return response()->noContent();
@@ -57,6 +65,7 @@ class VoteController extends Controller
     public function downVote(VoteRequest $request)
     {
         if ($request->resource_type == 'thread') {
+            $thread = Thread::find($request->resource_id);
             $previousVote = Thread::firstVoteByCurrentUser($request->resource_id);
 
             if ($previousVote) {
@@ -66,10 +75,12 @@ class VoteController extends Controller
                 }
             } else {
                 Thread::createDownVote($request->resource_id);
+                $thread->user->notify(new VoteNotification('down', 'thread', auth()->user(), $thread->title, $request->resource_id));
             }
         }
 
         if ($request->resource_type == 'comment') {
+            $comment = Comment::find($request->resource_id);
             $previousVote = Comment::firstVoteByCurrentUser($request->resource_id);
 
             if ($previousVote) {
@@ -79,6 +90,7 @@ class VoteController extends Controller
                 }
             } else {
                 Comment::createDownVote($request->resource_id);
+                $comment->user->notify(new VoteNotification('down', 'comment', auth()->user(), $comment->text, $request->resource_id));
             }
         }
         return response()->noContent();

@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReplyNotification extends Notification
+class ReplyNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     private Comment $comment;
@@ -33,7 +33,7 @@ class ReplyNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast', 'mail'];
     }
 
     /**
@@ -59,8 +59,13 @@ class ReplyNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type' => 'reply',
+            'notification_for' => 'reply',
             'data' => $this->comment->text,
+            'notifiable_to' => [
+                'id' =>   $this->comment->id,
+                'type' => 'comment',
+                'thread_id' => $this->comment->thread->id
+            ],
             'responsible' => new UserResource($this->comment->user)
         ];
     }

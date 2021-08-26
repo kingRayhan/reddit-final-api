@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    \App\Events\TestEvent::dispatch();
     return view('welcome');
 });

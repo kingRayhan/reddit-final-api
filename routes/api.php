@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationPreviewController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
@@ -64,3 +65,10 @@ Route::delete('notifications/destroy-reads', [NotificationController::class, 'de
 Route::post('notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead']);
 Route::post('notifications/mark-as-unread/{id}', [NotificationController::class, 'markAsUnread']);
 Route::delete('notifications/delete/{id}', [NotificationController::class, 'destroy']);
+
+
+/**
+ * Notification Preview
+ */
+Route::post('notifications/preview', [NotificationPreviewController::class, 'preview'])
+    ->middleware('auth:sanctum');

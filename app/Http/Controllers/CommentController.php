@@ -8,7 +8,7 @@ use App\Http\Requests\Comment\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Thread;
-use App\Notifications\NewCommentNotification;
+use App\Notifications\CommentNotification;
 use App\Notifications\ReplyNotification;
 use Database\Factories\CommentFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -52,7 +52,7 @@ class CommentController extends Controller
             $replyingComment->user->notify(new ReplyNotification($data));
 
         } else {
-            $thread->user->notify(new NewCommentNotification($data));
+            $thread->user->notify(new CommentNotification($data));
         }
 
 
