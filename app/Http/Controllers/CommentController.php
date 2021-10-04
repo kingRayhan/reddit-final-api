@@ -8,9 +8,6 @@ use App\Http\Requests\Comment\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Thread;
-use App\Notifications\CommentNotification;
-use App\Notifications\ReplyNotification;
-use Database\Factories\CommentFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class CommentController extends Controller
@@ -27,7 +24,6 @@ class CommentController extends Controller
 
         $comments = Comment::nestedComments($thread->id, $page, $limit);
         $count = Comment::where('thread_id', $thread->id)->whereNull('parent_id')->count();
-
         $comments = new LengthAwarePaginator($comments, $count, $limit, $page);
 
         return CommentResource::collection($comments);
@@ -46,15 +42,6 @@ class CommentController extends Controller
         );
 
         NewCommentCreated::dispatch($data);
-
-        if ($request->query('reply_to')) {
-            $replyingComment = Comment::find($request->query('reply_to'));
-            $replyingComment->user->notify(new ReplyNotification($data));
-
-        } else {
-            $thread->user->notify(new CommentNotification($data));
-        }
-
 
         return response()->json([
             'message' => 'Created successfully',
