@@ -27,7 +27,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewThreadCreated::class => [
             UpVoteMyOwnThread::class,
-            BroadcastNewThread::class
         ],
         NewCommentCreated::class => [
             UpVoteMyOwnComment::class,

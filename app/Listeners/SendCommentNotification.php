@@ -5,8 +5,6 @@ namespace App\Listeners;
 use App\Models\Comment;
 use App\Notifications\CommentNotification;
 use App\Notifications\ReplyNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SendCommentNotification
 {

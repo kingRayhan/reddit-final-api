@@ -47,7 +47,7 @@ class ThreadController extends Controller
     {
         $thread = auth()->user()->threads()->create($request->all());
 
-        event(new NewThreadCreated($thread));
+        NewThreadCreated::dispatch($thread);
 
         return response()->json([
             'message' => 'Thread created',
@@ -59,7 +59,7 @@ class ThreadController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Thread $thread
-     * @return ThreadDetails
+     * @return ThreadList
      */
     public function show(Thread $thread)
     {

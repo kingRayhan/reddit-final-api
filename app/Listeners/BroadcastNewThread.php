@@ -2,10 +2,11 @@
 
 namespace App\Listeners;
 
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class BroadcastNewThread
+class BroadcastNewThread implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -25,6 +26,5 @@ class BroadcastNewThread
      */
     public function handle($event)
     {
-        //
     }
 }
