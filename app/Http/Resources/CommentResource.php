@@ -14,7 +14,6 @@ class CommentResource extends JsonResource
      */
     public function toArray($request)
     {
-//        return parent::toArray($request);
         return [
             'id' => $this->id,
             'text' => $this->text,
@@ -22,7 +21,7 @@ class CommentResource extends JsonResource
             'replies' => CommentResource::collection($this->replies),
             'upVotedBy' => $this->upVotedBy(),
             'downVotedBy' => $this->downVotedBy(),
-            'voteScores' => $this->upVotedBy()->count() - $this->downVotedBy()->count(),
+            'voteScores' => $this->voteScores(),
             'created_at' => $this->created_at
         ];
     }

@@ -26,7 +26,6 @@ class ThreadList extends JsonResource
      */
     public function toArray($request)
     {
-//        parent::toArray($request),
         return [
             'id' => $this->id,
             "title" => $this->title,
@@ -39,7 +38,7 @@ class ThreadList extends JsonResource
             'time' => $this->created_at->diffForHumans(),
             'upVotedBy' => $this->upVotedBy(),
             'downVotedBy' => $this->downVotedBy(),
-            'voteScores' => $this->upVotedBy()->count() - $this->downVotedBy()->count(),
+            'voteScores' => $this->voteScores(),
             'comments_count' => $this->comments()->count()
         ];
     }

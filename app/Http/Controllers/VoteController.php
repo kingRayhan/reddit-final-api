@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VoteUpdated;
 use App\Http\Requests\Vote\VoteRequest;
 use App\Models\Comment;
 use App\Models\Thread;
@@ -9,6 +10,12 @@ use App\Notifications\VoteNotification;
 
 class VoteController extends Controller
 {
+
+    public $votable_models = [
+        'thread' => Thread::class,
+        'comment' => Comment::class,
+    ];
+
     public function __construct()
     {
         $this->middleware('auth:sanctum');
@@ -58,6 +65,8 @@ class VoteController extends Controller
 
         }
 
+        VoteUpdated::dispatch($request->resource_type, $request->resource_id, auth()->id());
+
         return response()->noContent();
     }
 
@@ -101,6 +110,8 @@ class VoteController extends Controller
                 }
             }
         }
+
+        VoteUpdated::dispatch($request->resource_type, $request->resource_id, auth()->id());
         return response()->noContent();
     }
 }
